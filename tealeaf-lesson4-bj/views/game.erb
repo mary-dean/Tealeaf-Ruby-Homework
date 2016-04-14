@@ -1,0 +1,107 @@
+
+<!-- FIRST ROW HAS GREETING, BET, AND KITTY -->
+<div class="row-fluid">
+  <div class="span1"></div>
+  <div class="span6">
+    <h3><em>Welcome, <%=session[:player_name]%>.</em> Good luck!</h3>
+  </div>
+  <div class="span1">
+    <h5>Bet:</h5>
+    <h4 class="money_font">$<%=session[:current_bet]%></h4>
+  </div>
+  <div class="span1">
+    <h5>Kitty:</h5>
+    <h4 class='money_font'>$<%= session[:kitty] %></h4>
+    <h5><%=session[:balance_history]%></h5>
+  </div>
+  <div class="span2">
+    <h5>Cards in deck:</h5>
+    <h4 class='money_font'><%= session[:deck].size.to_s %></h4>
+  </div>
+  <div class="span1"></div>
+</div>
+<br/>
+
+<!-- NEW ROW FOR CARDS AND CARD COUNT -->
+
+  <div class="row-fluid">
+
+    <div class="span1"></div>
+    <div class="span1">
+      <div class="well well-small">
+        <img src="/images/clipart/dealer.jpg">
+      </div>
+
+      <div class="well well-small">
+        <img src="/images/clipart/player.jpg">
+      </div>
+    </div>
+
+    <div class="span7">
+      <div class="well well-small" id="dealer_well">
+        <%if @show_dealer_first_card == false%>
+            <img src="/images/cards/back_suits_red.png">
+            <%= "<img src='/images/cards/#{session[:dealer_cards][1].to_s}.png' class='card_image'>" %>
+          <%else%>
+            <% session[:dealer_cards].each do |card| %>
+                <%= "<img src='/images/cards/#{card.to_s}.png' class='card_image'>" %>
+            <% end %>
+          <%end%>
+        <%if @dealer_blackjack == true%>
+            <img src="/images/clipart/blackjack_dealer.png" align="right">
+        <%end%>
+      </div>
+
+      <div class="well well-small" id="player_well">
+
+        <% session[:player_cards].each do |card| %>
+            <%= "<img src='/images/cards/#{card.to_s}.png' class='card_image'>" %>
+        <% end %>
+
+        <%if @player_blackjack == true%>
+          <img src="/images/clipart/blackjack_player.png" align="right">
+        <%end%>
+      </div>
+
+      <%=session[:helpful_message]%>
+      <br/>
+
+
+      <%if @show_hit_stay_buttons%>
+
+          <form id="hit_form" action="/game/player/hit" method="post">
+            <input type="submit" class="btn btn-danger btn-large" value="Hit">
+          </form>
+          <form id="stay_form" action="/game/player/stay" method="post">
+            <input type="submit" class="btn btn-success btn-large" value="Stay">
+          </form>
+      <% end %>
+
+      <% if @show_dealer_turn_button%>
+          <form id="dealer_turn_form" action="/game/dealer" method="get">
+            <input type="submit" class="btn btn-warning btn-large" value="Play Dealer's Turn">
+          </form>
+      <%end%>
+
+      <% if @show_play_again_button%>
+          <form id="play_again_form" action="/game/player/set_new_bet" method="get">
+            <input type="submit" class="btn btn-primary btn-large" value="Play Again?">
+          </form>
+      <%end%>
+
+
+    </div>
+
+    <div class="span2"></div>
+
+    <div class="span1"></div>
+
+      <div class="row-fluid">
+        <div class="span1"></div>
+        <div class="span9">
+          <h4>Watch your winnings (or losings) grow!</h4>
+      <canvas id="moneyChart" width = "600" height="200"></canvas>
+</div>
+</div>
+  </div>
+

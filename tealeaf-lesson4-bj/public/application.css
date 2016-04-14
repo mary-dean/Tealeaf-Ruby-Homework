@@ -1,0 +1,49 @@
+form#hit_form {
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+form#stay_form {
+    float: left;
+    margin-top: 10px;
+}
+
+form#dealer_turn_form {
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+form#add_to_kitty_form {
+    float: left;
+    margin-top: 10px;
+}
+
+form#play_again_form {
+    margin-top: 10px;
+}
+
+
+img.card_image{
+    margin: 0px 5px 5px 0px;
+}
+
+.well {
+    box-sizing: border-box;
+}
+
+#player_well {
+    background-color: rosybrown;
+}
+
+#dealer_well {
+    background-color: goldenrod;
+}
+
+h4.money_font {
+  color:green;
+
+}

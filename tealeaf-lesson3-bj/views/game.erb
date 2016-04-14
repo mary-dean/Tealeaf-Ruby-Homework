@@ -1,0 +1,169 @@
+
+<!-- FIRST ROW HAS GREETING, BET, AND KITTY -->
+<div class="row-fluid">
+  <div class="span1"></div>
+  <div class="span6">
+    <h3><em>Welcome, <%=session[:player_name]%>.</em> Good luck!</h3>
+  </div>
+  <div class="span1">
+    <h5>Bet:</h5>
+    <h4 class="money_font">$<%=session[:current_bet]%></h4>
+  </div>
+  <div class="span1">
+    <h5>Kitty:</h5>
+    <h4 class='money_font'>$<%= session[:kitty] %></h4>
+  </div>
+  <div class="span2">
+    <h5>Cards in deck:</h5>
+    <h4 class='money_font'><%= session[:deck].size.to_s %></h4>
+  </div>
+  <div class="span1"></div>
+</div>
+<br/>
+
+<!-- NEW ROW FOR CARDS AND CARD COUNT -->
+
+  <div class="row-fluid">
+
+    <div class="span1"></div>
+    <div class="span1" text-center">
+      <div class="well well-small">
+        <img src="/images/clipart/dealer.jpg">
+      </div>
+
+      <div class="well well-small">
+        <img src="/images/clipart/player.jpg">
+      </div>
+    </div>
+
+    <div class="span7">
+
+      <div class="well well-small">
+
+        <%if @show_dealer_first_card == false%>
+            <img src="/images/cards/back_suits_red.png">
+            <%= "<img src='/images/cards/#{session[:dealer_cards][1].to_s}.png' class='card_image'>" %>
+          <%else%>
+            <% session[:dealer_cards].each do |card| %>
+                <%= "<img src='/images/cards/#{card.to_s}.png' class='card_image'>" %>
+            <% end %>
+          <%end%>
+        <%if @dealer_blackjack == true%>
+            <img src="/images/clipart/blackjack_dealer.png" align="right">
+        <%end%>
+      </div>
+
+      <div class="well well-small">
+
+        <% session[:player_cards].each do |card| %>
+            <%= "<img src='/images/cards/#{card.to_s}.png' class='card_image'>" %>
+        <% end %>
+
+        <%if @player_blackjack == true%>
+          <img src="/images/clipart/blackjack_player.png" align="right">
+        <%end%>
+      </div>
+
+      <%=session[:helpful_message]%>
+      <br/>
+
+
+      <%if @show_hit_stay_buttons%>
+
+          <form id="hit_form" action="/game/player/hit" method="post">
+            <input type="submit" class="btn btn-danger btn-large" value="Hit">
+          </form>
+          <form id="stay_form" action="/game/player/stay" method="post">
+            <input type="submit" class="btn btn-success btn-large" value="Stay">
+          </form>
+      <% end %>
+
+      <% if @show_dealer_turn_button%>
+          <form id="hit_form" action="/game/dealer" method="get">
+            <input type="submit" class="btn btn-warning btn-large" value="Play Dealer's Turn">
+          </form>
+      <%end%>
+
+      <% if @show_play_again_button%>
+          <form id="play_again_form" action="/game/player/set_new_bet" method="get">
+            <input type="submit" class="btn btn-primary btn-large" value="Play Again?">
+          </form>
+      <%end%>
+
+
+    </div>
+
+    <div class="span2">
+      <% a = [] %>
+      <% ranks = ["ace", "king", "queen", "jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"] %>
+      <% ranks.each do |r| %>
+          <% a << session[:deck].count { |c| c.split("_")[0] == r } %>
+      <% end %>
+      <!--puts "QTY:  |  #{a[0]}  |  #{a[1]}  |  #{a[2]}  |  #{a[3]}  |  #{a[4]}  |  #{a[5]}  |  #{a[6]}  |  #{a[7]}  |  #{a[8]}  |   #{a[9]} |  #{a[10] + a[11] +a[12]}"-->
+      <table class="table table-striped table-bordered table-condensed">
+        <thead>
+        <tr>
+          <th>Face:</th>
+          <th>Qty:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Ace</td>
+          <td><%= "#{a[0]}" %></td>
+        </tr>
+        <tr>
+          <td>King</td>
+          <td><%= "#{a[1]}" %></td>
+        </tr>
+        <tr>
+          <td>Queen</td>
+          <td><%= "#{a[2]}" %></td>
+        </tr>
+        <tr>
+          <td>Jack</td>
+          <td><%= "#{a[3]}" %></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><%= "#{a[4]}" %></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><%= "#{a[5]}" %></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><%= "#{a[6]}" %></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><%= "#{a[7]}" %></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><%= "#{a[8]}" %></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><%= "#{a[9]}" %></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><%= "#{a[10]}" %></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><%= "#{a[11]}" %></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><%= "#{a[12]}" %></td>
+        </tr>
+        </tbody>
+        </small></small>
+      </table>
+    </div>
+    <div class="span1"></div>
+  </div>
+

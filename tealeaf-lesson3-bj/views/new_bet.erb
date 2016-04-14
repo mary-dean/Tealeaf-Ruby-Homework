@@ -1,0 +1,33 @@
+<div class="container-fluid">
+
+  <div class="row-fluid">
+    <div class="span1">
+      </div>
+    <div class="span7">
+
+<form action='/game/player/set_new_bet' method="post">
+  <h3>Great game, <%=session[:player_name]%></h3>
+  <h4>You may keep same bet, or change it here.</h4>
+  <input type="text" autocomplete="off" name="current_bet" value=<%=session[:current_bet]%>>
+
+  <h3>Would you like to add more chips to your kitty?</h3>
+  <h4>You currently have $<%=session[:kitty].to_s%>. Enter dollar amount to add:</h4>
+  <input type="text" autocomplete="off" name="add_to_kitty" value="0"><br/>
+
+
+  <br/>
+  <button type="submit" class="btn btn-primary btn-large">
+    <i class='icon-star icon-white'></i> &nbsp Let's Play Blackjack! &nbsp<i class="icon-star icon-white"></i>
+  </button>
+</form>
+
+    </div>
+      <div class="span3">
+        <img src="/images/clipart/Bag.png">
+      </div>
+<div class="span1">
+
+</div>
+
+      </div>
+    </div>
